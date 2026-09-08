@@ -10,7 +10,7 @@
 <meta property="og:title" content="MAHIR Portal · NICTSeD 2026 Grand Final" />
 <meta property="og:description" content="Slide navigation for the MAHIR Grand Final deck. Five rules to make AI Nation 2030 trustworthy. SMK St Bernadette's Convent, Perak Darul Ridzuan." />
 <meta property="og:url" content="https://brotaufik.github.io/mahir-portal/" />
-<meta property="og:image" content="https://brotaufik.github.io/mahir-portal/og.jpg" />
+<meta property="og:image" content="https://brotaufik.github.io/mahir-portal/og-mahir.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -472,7 +472,7 @@ setInterval(()=>{
   if(!probe()) return;
   try{
     const h=frame.contentWindow.location.hash||'';
-    const m=/^#s(\d+)(?:\.(\d+))?/.exec(h);
+    const m=/^#s?(\d+)(?:\.(\d+))?/.exec(h);
     if(m){ const n=+m[1], b=+(m[2]||0); if(n!==cur||b!==curB) setCur(n,b); }
   }catch(e){ sameOrigin=false; }
 },450);
