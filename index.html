@@ -584,7 +584,7 @@ function wallKey(r){ return r.t+'|'+r.q.slice(0,90); }
 
 async function wallFetch(){
   const u='https://docs.google.com/spreadsheets/d/'+WALL_ID+'/gviz/tq?tqx=out:json&gid='+WALL_GID
-        +'&tq='+encodeURIComponent(WALL_TQ)+'&_='+Date.now();
+        +'&headers=1&tq='+encodeURIComponent(WALL_TQ)+'&_='+Date.now();
   const res=await fetch(u,{cache:'no-store'});
   if(!res.ok) throw new Error('HTTP '+res.status);
   const txt=await res.text();
