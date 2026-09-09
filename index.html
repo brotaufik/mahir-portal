@@ -184,6 +184,46 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
  border-radius:999px;padding:6px 12px}
 .film-note{margin:14px 0 0;color:var(--muted);font-size:13px;max-width:70ch}
 
+/* Presenter keynotes */
+.kn{position:absolute;inset:0;overflow:hidden;background:var(--navy-900);display:none}
+.kn.on{display:flex;flex-direction:column}
+.kn-hd{flex:0 0 auto;padding:20px 30px 14px;border-bottom:1px solid var(--line-2);
+ display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.kn-hd h2{margin:0 0 5px;font-size:23px;font-weight:700;letter-spacing:.01em}
+.kn-hd p{margin:0;color:#B8C6E0;font-size:13px;max-width:66ch}
+.kn-tabs{display:flex;gap:7px;flex-wrap:wrap}
+.kn-tab{border:1px solid var(--line-2);background:rgba(255,255,255,.05);color:#C8D5EC;
+ border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:600;cursor:pointer;
+ font-family:inherit;transition:background .16s,border-color .16s,color .16s}
+.kn-tab:hover{background:rgba(255,255,255,.1);color:#fff}
+.kn-tab.on{background:rgba(242,178,51,.16);border-color:rgba(242,178,51,.42);color:var(--gold)}
+.kn-body{flex:1 1 auto;overflow-y:auto;padding:22px 30px 70px}
+.kn-in{max-width:900px;margin:0 auto;display:grid;gap:22px}
+.kn-sec{display:flex;align-items:center;gap:14px;margin:14px 0 2px}
+.kn-sec span{flex:0 0 auto;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--gold);background:rgba(242,178,51,.12);border:1px solid rgba(242,178,51,.32);
+ border-radius:999px;padding:6px 14px}
+.kn-sec i{flex:1 1 auto;height:1px;background:var(--line-2);font-style:normal}
+.kn-card{border:1px solid var(--line-2);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03)}
+.kn-top{display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid var(--line-2)}
+.kn-no{flex:0 0 auto;min-width:30px;height:26px;padding:0 8px;display:inline-flex;align-items:center;
+ justify-content:center;border-radius:8px;background:rgba(58,110,240,.16);border:1px solid rgba(58,110,240,.34);
+ color:#8FB4FF;font-size:12px;font-weight:700}
+.kn-who{flex:0 0 auto;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.kn-ttl{flex:1 1 auto;min-width:0;font-size:13.5px;font-weight:600;color:#DCE6F7;line-height:1.35}
+.kn-img{display:block;width:100%;height:auto;background:#0B1530;border-bottom:1px solid var(--line-2)}
+.kn-txt{padding:16px 20px 18px;display:grid;gap:11px}
+.kn-txt p{margin:0;font-size:14.5px;line-height:1.66;color:#E6EDFA}
+.kn-txt p.lead{font-size:16px;font-weight:600;color:#fff;line-height:1.5}
+.kn-txt p.note{font-size:13px;color:#A9BBD0;font-style:italic}
+.kn-txt ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+.kn-txt li{display:flex;gap:10px;font-size:14.5px;line-height:1.6;color:#E6EDFA}
+.kn-txt li b{flex:0 0 auto;color:var(--gold);font-weight:700}
+.kn-none{padding:16px 20px;font-size:13.5px;color:var(--muted);font-style:italic}
+.kn-empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;
+ border:1px dashed var(--line-2);border-radius:14px}
+.kn-top-btn{position:absolute;right:26px;bottom:22px;z-index:6;box-shadow:0 14px 40px rgba(0,0,0,.5)}
+
 /* Audience question wall */
 .wall{position:absolute;inset:0;overflow-y:auto;background:var(--navy-900);padding:30px;display:none}
 .wall.on{display:block}
@@ -236,6 +276,9 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
   .stagewrap{padding:8px}
   .faq-in{grid-template-columns:1fr}
   .film{padding:18px}
+  .kn-hd{padding:15px 18px 11px}
+  .kn-body{padding:16px 18px 70px}
+  .kn-ttl{display:none}
   .faq{padding:20px}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
@@ -346,6 +389,24 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
         </div>
       </section>
 
+      <section class="kn" id="knView" aria-label="Presenter keynotes">
+        <div class="kn-hd">
+          <div>
+            <h2>PRESENTER KEYNOTES</h2>
+            <p>All 40 keynote slides, exactly as the team delivers them. Presenter 1 opens on AI Nation 2030, Presenter 2 carries the MAHIR Blueprint. Every slide is shown with the words on it.</p>
+          </div>
+          <div class="kn-tabs">
+            <button class="kn-tab on" data-p="0">All 40</button>
+            <button class="kn-tab" data-p="1">Presenter 1</button>
+            <button class="kn-tab" data-p="2">Presenter 2</button>
+          </div>
+        </div>
+        <div class="kn-body" id="knBody">
+          <div class="kn-in" id="knIn"></div>
+        </div>
+        <button class="btn kn-top-btn" id="knTop">Back to the top</button>
+      </section>
+
       <section class="film" id="filmView" aria-label="MAHIR film">
         <div class="film-in">
           <div class="film-hd">
@@ -396,12 +457,14 @@ const IC={
   form:'<rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
   qr:'<rect x="3" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M14 14h3v3h-3z" stroke="currentColor" stroke-width="1.8"/>',
   star:'<path d="M12 3.4 14.65 8.9l6.05.88-4.38 4.27 1.04 6.03L12 17.2l-5.36 2.88 1.04-6.03L3.3 9.78 9.35 8.9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>',
+  mic:'<rect x="9" y="2.5" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
   film:'<rect x="2.5" y="4.5" width="19" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 9.1v5.8L15 12z" fill="currentColor"/>',
   book:'<path d="M4 4.6A1.6 1.6 0 0 1 5.6 3H19.5v15.4H5.6A1.6 1.6 0 0 0 4 20z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 7.6h7.5M8 11.2h7.5M8 14.8h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'
 };
 const DECKS={
   mahir:{path:'../mahir-deck/',label:'MAHIR',round:'Grand Final',sub:'AI Nation 2030',
-    links:[{t:'Deck live',s:'Full tab, with a Portal button',href:'../mahir-deck/?hub=1',ext:true,ic:IC.screen},
+    links:[{t:'PRESENTER KEYNOTES',s:'All 40 slides, word for word',view:'kn',ic:IC.mic},
+           {t:'Deck live',s:'Full tab, with a Portal button',href:'../mahir-deck/?hub=1',ext:true,ic:IC.screen},
            {t:'FAQ form',s:'forms.gle/LGBYZzMqPFCaycwV6',href:'https://forms.gle/LGBYZzMqPFCaycwV6',ext:true,ic:IC.form},
            {t:'MAHIR film',s:'40 seconds, with sound',view:'film',ic:IC.film},
            {t:'Slide 32 \u00b7 QR',s:'The QR shows the moment the slide opens',slide:32,build:0,ic:IC.qr},
@@ -431,6 +494,8 @@ function buildLinks(){
       (l.ext?'<span class="ext"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>':'');
     a.querySelector('b').textContent=l.t; a.querySelector('small').textContent=l.s;
     if(l.slide) a.addEventListener('click',()=>go(l.slide,l.build||0));
+    if(l.view==='film') a.addEventListener('click',showFilm);
+    if(l.view==='kn') a.addEventListener('click',showKn);
     if(l.view==='film') a.addEventListener('click',showFilm);
     box.appendChild(a);
   });
@@ -518,7 +583,7 @@ function setCur(n,b){
     const on=+d.dataset.act===s.act; d.classList.toggle('on',on);
     if(on && !d.open && !$('#q').value.trim()) d.open=true;
   });
-  $('#prev').disabled=(n<=1&&curB<=0); $('#next').disabled=(n>=42&&curB>=s.builds-1);
+  $('#prev').disabled=(n<=1&&curB<=0); $('#next').disabled=(n>=N&&curB>=s.builds-1);
   const c=document.querySelector('.sl.cur');
   if(c){ const r=c.getBoundingClientRect(), nr=nav.getBoundingClientRect();
     if(r.top<nr.top+8||r.bottom>nr.bottom-8) c.scrollIntoView({block:'nearest'}); }
@@ -533,12 +598,98 @@ setInterval(()=>{
   }catch(e){ sameOrigin=false; }
 },450);
 
+
+/* ---------- Presenter keynotes: all 40 slides, verbatim -------------------
+   Transcribed from GRANDFINALSNICTSED2026PRESENTER1.pptx. Slides 1-20 are
+   Presenter 1, 21-40 Presenter 2. Images are the slides themselves, so the
+   audience reads exactly what is on screen.                                 */
+const KEYNOTES = [{"n":1,"p":1,"t":"Title","b":[{"k":"lead","v":"GRAND-FINALS NICTSED 2026"},{"k":"note","v":"Presenter 1"}]},{"n":2,"p":1,"t":"Kuala Lumpur skyline","b":[]},{"n":3,"p":1,"t":"The question that changes","b":[{"k":"note","v":"How much AI do we have?  (struck through)"},{"k":"lead","v":"What did AI make us capable of becoming?"},{"k":"p","v":"In four years, Malaysia will not simply ask the first — we will ask the far more important second."}]},{"n":4,"p":1,"t":"2030 is a deadline","b":[{"k":"lead","v":"2030 is not a finish line for technology. It is a deadline for TRANSFORMATION."}]},{"n":5,"p":1,"t":"AI Nation 2030","b":[{"k":"lead","v":"AI NATION 2030"}]},{"n":6,"p":1,"t":"AI Nation 2030","b":[{"k":"lead","v":"AI NATION 2030"},{"k":"p","v":"Malaysia has already set that direction. Through AI Nation 2030 and the National AI Action Plan 2026–2030, Malaysia is positioning AI as a national driver of economic growth, innovation, public-sector transformation and human development."}]},{"n":7,"p":1,"t":"What kind of AI nation","b":[{"k":"note","v":"Our question is: What kind of AI nation will we become?"},{"k":"lead","v":"The ambition is clear: Malaysia must become an AI nation."},{"k":"list","v":["One that simply consumes intelligence created elsewhere?","Or one that creates intelligence of its own?"]}]},{"n":8,"p":1,"t":"First strategic shift","b":[{"k":"note","v":"THAT IS OUR FIRST STRATEGIC SHIFT:"},{"k":"lead","v":"From consumer to producer."},{"k":"p","v":"Malaysia must move beyond purchasing foreign technology towards building homegrown AI, Malaysian intellectual property and solutions shaped by our own needs."}]},{"n":9,"p":1,"t":"AI sovereignty","b":[{"k":"lead","v":"AI sovereignty is not simply about where the servers are."},{"k":"list","v":["Who builds the intelligence","Whose data shapes it","What values it understands","Whose voice it speaks"]}]},{"n":10,"p":1,"t":"That voice must include Bahasa Melayu","b":[{"k":"lead","v":"For Malaysia, that voice must include Bahasa Melayu."},{"k":"p","v":"Our AI must understand our language. Our culture. Our context. Our people."},{"k":"note","v":"Technology should adapt to Malaysia — not Malaysia adapt blindly to technology."}]},{"n":11,"p":1,"t":"Real transformation across sectors","b":[{"k":"lead","v":"REAL TRANSFORMATION ACROSS SECTORS"},{"k":"p","v":"According to Malaysia's AI Nation 2030 direction, AI is intended to move across sectors and generate tangible national impact."}]},{"n":12,"p":1,"t":"Healthcare","b":[{"k":"lead","v":"Healthcare"},{"k":"p","v":"AI can support professionals by processing information and identifying patterns faster. The machine assists. The human decides."}]},{"n":13,"p":1,"t":"AI becoming economic opportunity","b":[{"k":"lead","v":"AI Becoming Economic Opportunity."},{"k":"p","v":"AI can give Malaysian SMEs access to advanced capabilities — helping them improve productivity, understand markets and compete beyond our borders. That is AI becoming economic opportunity."}]},{"n":14,"p":1,"t":"Three things","b":[{"k":"lead","v":"SO OUR TRANSFORMATION HAS TO ACHIEVE THREE THINGS:"},{"k":"list","v":["1 — BUILD CAPABILITY.","2 — CREATE OPPORTUNITY.","3 — PROTECT HUMANITY."]}]},{"n":15,"p":1,"t":"His message is clear","b":[{"k":"lead","v":"HIS MESSAGE IS CLEAR:"},{"k":"p","v":"Prime Minister Dato Seri Anwar Ibrahim has recognised this very balance: Generative AI can improve productivity, efficiency, quality of life and human creativity, while raising serious questions around human values, data protection and responsible use."},{"k":"note","v":"AI must be developed and adopted responsibly and ethically."}]},{"n":16,"p":1,"t":"Ethics built into innovation","b":[{"k":"lead","v":"Ethics cannot come after innovation. Ethics must be built into innovation."},{"k":"p","v":"Efficiency without accountability creates risk. Innovation without dignity creates harm. And intelligence without humanity is not progress."}]},{"n":17,"p":1,"t":"A Malaysia that moves","b":[{"k":"lead","v":"A MALAYSIA THAT MOVES"},{"k":"list","v":["1 — FROM CONSUMER TO PRODUCER","2 — FROM TECHNOLOGY ADOPTION TO TECHNOLOGICAL SOVEREIGNTY","3 — FROM AI CAPABILITY TO HUMAN OPPORTUNITY"]}]},{"n":18,"p":1,"t":"Our vision","b":[{"k":"lead","v":"Our Vision"},{"k":"p","v":"When we say AI Nation 2030, we are not talking about a Malaysia filled with machines. We are talking about a Malaysia with the capability to create, the capacity to compete, and the wisdom to govern."},{"k":"list","v":["Capability to Create","Capacity to Compete","Wisdom to Govern"]}]},{"n":19,"p":1,"t":"Four years","b":[{"k":"lead","v":"FOUR YEARS."},{"k":"list","v":["1 — FOUR YEARS TO BUILD MALAYSIAN INTELLIGENCE.","2 — FOUR YEARS TO STRENGTHEN MALAYSIAN COMPETITIVENESS.","3 — FOUR YEARS TO ENSURE THAT OUR TECHNOLOGICAL FUTURE REMAINS FUNDAMENTALLY HUMAN."]},{"k":"note","v":"AI may shape the future. But Malaysia must decide what that future looks like."}]},{"n":20,"p":1,"t":"Ready to lead it","b":[{"k":"lead","v":"By 2030, we should not simply be ready for the AI future. We should be ready to lead it."},{"k":"p","v":"Thank you."}]},{"n":21,"p":2,"t":"Title","b":[{"k":"lead","v":"GRAND-FINALS NICTSED 2026"},{"k":"note","v":"Presenter 2"}]},{"n":22,"p":2,"t":"Enabler E4","b":[{"k":"lead","v":"Enabler E4 — AI-Fluent Students."},{"k":"p","v":"Somewhere in this one hundred and four-page document, there is a line about me. It does not mention my name. It simply says, AI-Fluent Students."},{"k":"p","v":"E4 is not a warning telling us to stop. It is a promise, telling us to be guided — to make sure the tools already in our hands are used safely, responsibly, and with purpose."}]},{"n":23,"p":2,"t":"Not just a student","b":[{"k":"lead","v":"I am not just speaking as a student."},{"k":"note","v":"I am speaking as the exact person that page was written for."},{"k":"p","v":"Assalamualaikum and a very good day to the honourable panel of experts, distinguished guests, and everyone here today."}]},{"n":24,"p":2,"t":"Malaysia's advantage","b":[{"k":"lead","v":"MALAYSIA'S ADVANTAGE"},{"k":"p","v":"My first presenter opened with three questions that Malaysia must answer — how do we transform with AI, how do we govern that transformation ethically, and how do we protect the people living inside it. A Malaysia that stops being just a consumer of AI technology, and rises to become a producer of it."}]},{"n":25,"p":2,"t":"One nation, many identities","b":[{"k":"lead","v":"We carry Malay, Chinese, Indian, Iban, Kadazan, and so many more identities inside one nation."},{"k":"p","v":"The world might call that complicated. We call it our advantage — because an AI that grows up understanding all of us will understand people in a way no borrowed system ever could."}]},{"n":26,"p":2,"t":"The MAHIR Blueprint","b":[{"k":"lead","v":"THE MAHIR BLUEPRINT"},{"k":"p","v":"A human-centred governance framework that works alongside AI Nation 2030 — ensuring that every step of Malaysia's AI transformation is managed responsibly, held accountable, guided by human command, protected with integrity, and delivered with dignity."},{"k":"note","v":"In Malay, mahir means skilled. And a truly skilled nation is not the one that moves the fastest — it is the one that moves the most deliberately."}]},{"n":27,"p":2,"t":"Five pillars, one cycle","b":[{"k":"lead","v":"MAHIR Blueprint — Five Pillars, One Governance Cycle."},{"k":"list","v":["M — Manage AI Responsibly.","A — Accountability.","H — Human-in-Command. (at the centre)","I — Integrity.","R — Respecting Human Dignity."]},{"k":"p","v":"These five pillars are not five separate ideas scattered across a slide. They are one governance cycle."}]},{"n":28,"p":2,"t":"M — Manage AI Responsibly","b":[{"k":"lead","v":"M — MANAGE AI RESPONSIBLY"},{"k":"p","v":"Healthcare, welfare, banking — AI is moving into every sector at once, faster than most of us can track. That is exactly why we propose a risk-tiered system, where high-stakes AI undergoes mandatory impact assessment before deployment, not damage control after the harm is done."},{"k":"list","v":["Impact Scope: whether this system affects one person's convenience, or an entire community's rights.","Reversibility: if the AI gets it wrong, could the harm be corrected easily, or is it permanent."]},{"k":"note","v":"A movie recommendation can afford to be wrong. A decision about someone's life cannot."}]},{"n":29,"p":2,"t":"Who decides","b":[{"k":"lead","v":"Who decides which systems need stricter oversight before they are ever trusted with a decision?"},{"k":"p","v":"Right now, almost no one does."},{"k":"note","v":"High-stakes decisions demand human accountability."}]},{"n":30,"p":2,"t":"A — Accountability","b":[{"k":"lead","v":"A — ACCOUNTABILITY"},{"k":"p","v":"If an AI system misdiagnoses a patient in the healthcare sector — who do they turn to? The developer? The company? The government? Today, the honest answer is: no one knows."},{"k":"list","v":["1 — Developer certifies the system before release","2 — Company or Ministry deploying it takes ownership for how it is used","3 — Independent regulator audits the outcome if something goes wrong"]},{"k":"p","v":"Machines can make mistakes. Under the MAHIR Blueprint, people are still the ones who answer for them."}]},{"n":31,"p":2,"t":"H — Human-in-Command","b":[{"k":"lead","v":"H — HUMAN-IN-COMMAND"},{"k":"p","v":"Notice where this pillar sits — right at the center of MAHIR. That is not by accident. Every other pillar orbits around this one, because managing risk, holding people accountable, protecting integrity, respecting dignity — none of it means anything if a machine, not a person, has the final word."},{"k":"p","v":"Any decision affecting a citizen's rights, safety, or welfare must pass through a human checkpoint before it is finalized — someone with the authority to override, to suspend, to reject. Not a machine that decides your fate in silence, but a person who can still stop, and think it through."}]},{"n":32,"p":2,"t":"Passengers in their own future","b":[{"k":"lead","v":"Are Malaysians becoming passengers in their own country's future?"},{"k":"p","v":"Not under this Blueprint. A human checkpoint must exist before any decision affecting a citizen's rights is finalized."}]},{"n":33,"p":2,"t":"I — Integrity","b":[{"k":"lead","v":"I — INTEGRITY"},{"k":"p","v":"How can Malaysians trust a decision they cannot see the reasoning behind? Every high-risk AI system must pass a bias audit before launch, and be re-checked at fixed intervals after — not a one-time check, but an ongoing one."},{"k":"note","v":"If a hiring algorithm quietly filters out applicants from a certain postcode, the next audit catches it — before it becomes a pattern, not after it becomes a scandal."}]},{"n":34,"p":2,"t":"R — Respecting Human Dignity","b":[{"k":"lead","v":"R — RESPECTING HUMAN DIGNITY"},{"k":"p","v":"Will Malaysia's AI Nation serve the Fisherman in Terengganu as well as it serves the tech hubs of Kuala Lumpur? Only if we design for it."},{"k":"p","v":"Every high-risk public AI system must pass a language and accessibility test in Bahasa Malaysia, Tamil, Mandarin, Iban and other languages of our culture before it ever reaches the people it's meant to serve."},{"k":"p","v":"An AI Nation isn't measured by how intelligent our systems are, but by whether a pak cik in Terengganu can get help without needing his grandson to translate a chatbot for him."}]},{"n":35,"p":2,"t":"None of this without consequences","b":[{"k":"lead","v":"And none of this means anything without consequences."},{"k":"p","v":"Under the MAHIR Blueprint, a system that fails this review isn't fined and left running — it is suspended by the AI Safety Institute until it's fixed. That is a nation that means exactly what it says."},{"k":"note","v":"Dignity isn't free. But it is far cheaper than the alternative."}]},{"n":36,"p":2,"t":"The cost of dignity","b":[{"k":"lead","v":"THE COST OF DIGNITY"},{"k":"p","v":"We won't pretend this comes free. Human review takes time. Audits cost money. But weigh that against the alternative — one AI system quietly failing a hospital, a bank, an entire community. That failure costs far more than the review that could have stopped it."},{"k":"p","v":"Dignity isn't free. But it is far cheaper than the alternative."},{"k":"list","v":["REVIEW COST — Time. People. Money.","FAILURE COST — Systems. Trust. Lives."]}]},{"n":37,"p":2,"t":"How do we know if this works","b":[{"k":"lead","v":"HOW DO WE KNOW IF THIS WORKS?"},{"k":"note","v":"We measure it three ways."},{"k":"list","v":["ARE WE MORE PRODUCTIVE — by creating real jobs, and real capability?","ARE WE MORE TRUSTED — where there'll be fewer incidents and greater public confidence?","ARE WE MORE INCLUSIVE — and is the gap between rural and urban, rich and poor, finally beginning to close?"]}]},{"n":38,"p":2,"t":"A Malaysia for All","b":[{"k":"lead","v":"A Malaysia for All."},{"k":"p","v":"Measuring inclusivity — is the gap between rural and urban, rich and poor, finally beginning to close?"}]},{"n":39,"p":2,"t":"Strategic enough to lead","b":[{"k":"lead","v":"A MALAYSIA STRATEGIC ENOUGH TO LEAD"},{"k":"p","v":"Ladies and gentlemen, we don't fear an AI-powered Malaysia — we are ready to build one. Strategic in our ambition, ethical in our governance, and human in our dignity. That is the MAHIR Blueprint, walking side by side with AI Nation 2030."}]},{"n":40,"p":2,"t":"Closing","b":[{"k":"lead","v":"This is Team C's vision."},{"k":"p","v":"A Malaysia strategic enough to lead, and human enough to be trusted."},{"k":"list","v":["M — Manage AI Responsibly.","A — Accountability.","H — Human-in-Command.","I — Integrity.","R — Respecting Human Dignity."]}]}];
+const KN_IMG = n => 'keynotes/k' + String(n).padStart(2,'0') + '.jpg';
+
+let knFilter=0, knBuilt=false;
+
+function knRender(){
+  const box=$('#knIn'); if(!box) return;
+  box.innerHTML='';
+  const list=KEYNOTES.filter(k=>!knFilter||k.p===knFilter);
+  if(!list.length){ box.innerHTML='<div class="kn-empty">Nothing to show.</div>'; return; }
+  let lastP=null;
+  list.forEach(k=>{
+    if(k.p!==lastP){
+      lastP=k.p;
+      const h=el('div','kn-sec');
+      const sp=el('span'); sp.textContent='Presenter '+k.p+' · slides '+(k.p===1?'1 to 20':'21 to 40');
+      const ln=el('i'); h.appendChild(sp); h.appendChild(ln); box.appendChild(h);
+    }
+    const c=el('div','kn-card');
+    const top=el('div','kn-top');
+    const no=el('span','kn-no'); no.textContent=k.n;
+    const who=el('span','kn-who'); who.textContent='P'+k.p;
+    const tt=el('span','kn-ttl'); tt.textContent=k.t;
+    top.appendChild(no); top.appendChild(who); top.appendChild(tt); c.appendChild(top);
+
+    const im=el('img','kn-img');
+    im.src=KN_IMG(k.n); im.alt='Keynote slide '+k.n+': '+k.t;
+    im.loading='lazy'; im.decoding='async'; im.width=1200; im.height=675;
+    c.appendChild(im);
+
+    if(!k.b.length){
+      const e=el('div','kn-none'); e.textContent='This slide carries no words. It is the visual beat before the next line.';
+      c.appendChild(e);
+    } else {
+      const t=el('div','kn-txt');
+      k.b.forEach(b=>{
+        if(b.k==='list'){
+          const ul=el('ul');
+          b.v.forEach(item=>{
+            const li=el('li');
+            const m=/^([0-9]+\s*—|[MAHIR]\s*—)\s*(.*)$/.exec(item);
+            if(m){ const bb=el('b'); bb.textContent=m[1]; const sp=el('span'); sp.textContent=m[2];
+                   li.appendChild(bb); li.appendChild(sp); }
+            else { const bb=el('b'); bb.textContent='•'; const sp=el('span'); sp.textContent=item;
+                   li.appendChild(bb); li.appendChild(sp); }
+            ul.appendChild(li);
+          });
+          t.appendChild(ul);
+        } else {
+          const pEl=el('p', b.k==='lead'?'lead':(b.k==='note'?'note':''));
+          pEl.textContent=b.v; t.appendChild(pEl);
+        }
+      });
+      c.appendChild(t);
+    }
+    box.appendChild(c);
+  });
+  knBuilt=true;
+}
+
+function showKn(){
+  filmPause();
+  $('#filmView').classList.remove('on');
+  $('#faqView').classList.remove('on');
+  $('#wallView').classList.remove('on');
+  $('#knView').classList.add('on');
+  if(!knBuilt) knRender();
+}
+
+(function(){
+  const tabs=document.querySelectorAll('.kn-tab');
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    knFilter=+b.dataset.p;
+    tabs.forEach(x=>x.classList.toggle('on',x===b));
+    knRender();
+    const bd=$('#knBody'); if(bd) bd.scrollTop=0;
+  }));
+  const t=$('#knTop');
+  if(t) t.addEventListener('click',()=>{ const bd=$('#knBody'); if(bd) bd.scrollTo({top:0,behavior:'smooth'}); });
+})();
+
 /* ---------- views ---------- */
 function filmPause(){ const v=$('#filmVid'); if(v&&!v.paused) v.pause(); }
-function showDeck(){ filmPause(); $('#filmView').classList.remove('on'); $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); }
-function showFaq(){ filmPause(); $('#filmView').classList.remove('on'); $('#wallView').classList.remove('on'); $('#faqView').classList.add('on'); }
-function showWall(){ filmPause(); $('#filmView').classList.remove('on'); $('#faqView').classList.remove('on'); $('#wallView').classList.add('on'); wallLoad(); }
-function showFilm(){ $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); $('#filmView').classList.add('on'); }
+function showDeck(){ filmPause(); $('#knView').classList.remove('on'); $('#filmView').classList.remove('on'); $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); }
+function showFaq(){ filmPause(); $('#knView').classList.remove('on'); $('#filmView').classList.remove('on'); $('#wallView').classList.remove('on'); $('#faqView').classList.add('on'); }
+function showWall(){ filmPause(); $('#knView').classList.remove('on'); $('#filmView').classList.remove('on'); $('#faqView').classList.remove('on'); $('#wallView').classList.add('on'); wallLoad(); }
+function showFilm(){ $('#knView').classList.remove('on'); $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); $('#filmView').classList.add('on'); }
 $('#faqBtn').addEventListener('click',()=>{
   $('#faqView').classList.contains('on')?showDeck():showFaq();
 });
