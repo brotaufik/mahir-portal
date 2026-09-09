@@ -167,6 +167,23 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
 .steps .num{flex:0 0 auto;width:23px;height:23px;border-radius:50%;background:rgba(34,211,238,.16);color:var(--cyan);
   display:grid;place-items:center;font-size:11.5px;font-weight:700}
 
+/* Film view */
+.film{position:absolute;inset:0;overflow-y:auto;background:var(--navy-900);padding:30px;display:none}
+.film.on{display:block}
+.film-in{max-width:1060px;margin:0 auto}
+.film-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.film h2{margin:0 0 6px;font-size:26px;font-weight:700;letter-spacing:-.01em}
+.film-hd p{margin:0;color:#B8C6E0;font-size:13.5px;max-width:64ch}
+.film-act{display:flex;gap:8px;flex-wrap:wrap}
+.film-stage{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line-2);
+ background:#05080F;box-shadow:0 26px 70px rgba(0,0,0,.45)}
+.film-stage video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#05080F;outline:none}
+.film-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.film-meta span{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+ color:#B8C6E0;background:rgba(255,255,255,.05);border:1px solid var(--line-2);
+ border-radius:999px;padding:6px 12px}
+.film-note{margin:14px 0 0;color:var(--muted);font-size:13px;max-width:70ch}
+
 /* Audience question wall */
 .wall{position:absolute;inset:0;overflow-y:auto;background:var(--navy-900);padding:30px;display:none}
 .wall.on{display:block}
@@ -218,6 +235,7 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
   .scrim.on{opacity:1;pointer-events:auto}
   .stagewrap{padding:8px}
   .faq-in{grid-template-columns:1fr}
+  .film{padding:18px}
   .faq{padding:20px}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
@@ -281,6 +299,10 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
       <button class="btn" id="next" title="Next build (→)">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
+      <button class="btn" id="filmBtn" title="Play the MAHIR film (V)">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.2 9.1v5.8L15 12z" fill="currentColor"/></svg>
+        <span class="lb">Film</span>
+      </button>
       <button class="btn" id="wallBtn" title="Audience questions from the form">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H8l-5 3 1.6-4.4A8 8 0 1 1 21 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 9.4a2.8 2.8 0 1 1 3.6 2.7v1.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="12.8" cy="16.4" r="1" fill="currentColor"/></svg>
         <span class="lb">Questions</span><span class="cnt" id="wallCnt" hidden>0</span>
@@ -324,6 +346,29 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
         </div>
       </section>
 
+      <section class="film" id="filmView" aria-label="MAHIR film">
+        <div class="film-in">
+          <div class="film-hd">
+            <div>
+              <h2>MAHIR &middot; the film</h2>
+              <p>Forty seconds on why AI governance is a human question before it is a technical one. Play it cold to open the pitch, or after slide 22 to close it.</p>
+            </div>
+            <div class="film-act">
+              <button class="btn" id="filmRestart">Restart</button>
+              <a class="btn" id="filmOpen" href="media/mahir-film.mp4" target="_blank" rel="noopener">Open file &#8599;</a>
+            </div>
+          </div>
+          <div class="film-stage">
+            <video id="filmVid" controls playsinline preload="none" poster="media/mahir-film.jpg">
+              <source src="media/mahir-film.mp4" type="video/mp4">
+              Your browser cannot play this video. Use the Open file button above.
+            </video>
+          </div>
+          <div class="film-meta"><span>40 seconds</span><span>1080p &middot; with sound</span><span>9.8 MB</span><span>Plays offline once loaded</span></div>
+          <p class="film-note">Check the hall audio before you present. The film carries sound, and the deck behind it does not, so the level is easy to miss until the room is full.</p>
+        </div>
+      </section>
+
       <section class="wall" id="wallView" aria-label="Audience questions">
         <div class="wall-in">
           <div class="wall-hd">
@@ -351,12 +396,14 @@ const IC={
   form:'<rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
   qr:'<rect x="3" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M14 14h3v3h-3z" stroke="currentColor" stroke-width="1.8"/>',
   star:'<path d="M12 3.4 14.65 8.9l6.05.88-4.38 4.27 1.04 6.03L12 17.2l-5.36 2.88 1.04-6.03L3.3 9.78 9.35 8.9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>',
+  film:'<rect x="2.5" y="4.5" width="19" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 9.1v5.8L15 12z" fill="currentColor"/>',
   book:'<path d="M4 4.6A1.6 1.6 0 0 1 5.6 3H19.5v15.4H5.6A1.6 1.6 0 0 0 4 20z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 7.6h7.5M8 11.2h7.5M8 14.8h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'
 };
 const DECKS={
   mahir:{path:'../mahir-deck/',label:'MAHIR',round:'Grand Final',sub:'AI Nation 2030',
     links:[{t:'Deck live',s:'Full tab, with a Portal button',href:'../mahir-deck/?hub=1',ext:true,ic:IC.screen},
            {t:'FAQ form',s:'forms.gle/LGBYZzMqPFCaycwV6',href:'https://forms.gle/LGBYZzMqPFCaycwV6',ext:true,ic:IC.form},
+           {t:'MAHIR film',s:'40 seconds, with sound',view:'film',ic:IC.film},
            {t:'Slide 32 \u00b7 QR',s:'The QR shows the moment the slide opens',slide:32,build:0,ic:IC.qr},
            {t:'The framework',s:'Slide 13, the five rules',slide:13,build:0,ic:IC.star},
            {t:'Evidence bank',s:'Slides 23 to 32, for Q&A',slide:23,build:0,ic:IC.book}],
@@ -384,6 +431,7 @@ function buildLinks(){
       (l.ext?'<span class="ext"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>':'');
     a.querySelector('b').textContent=l.t; a.querySelector('small').textContent=l.s;
     if(l.slide) a.addEventListener('click',()=>go(l.slide,l.build||0));
+    if(l.view==='film') a.addEventListener('click',showFilm);
     box.appendChild(a);
   });
 }
@@ -486,11 +534,19 @@ setInterval(()=>{
 },450);
 
 /* ---------- views ---------- */
-function showDeck(){ $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); }
-function showFaq(){ $('#wallView').classList.remove('on'); $('#faqView').classList.add('on'); }
-function showWall(){ $('#faqView').classList.remove('on'); $('#wallView').classList.add('on'); wallLoad(); }
+function filmPause(){ const v=$('#filmVid'); if(v&&!v.paused) v.pause(); }
+function showDeck(){ filmPause(); $('#filmView').classList.remove('on'); $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); }
+function showFaq(){ filmPause(); $('#filmView').classList.remove('on'); $('#wallView').classList.remove('on'); $('#faqView').classList.add('on'); }
+function showWall(){ filmPause(); $('#filmView').classList.remove('on'); $('#faqView').classList.remove('on'); $('#wallView').classList.add('on'); wallLoad(); }
+function showFilm(){ $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); $('#filmView').classList.add('on'); }
 $('#faqBtn').addEventListener('click',()=>{
   $('#faqView').classList.contains('on')?showDeck():showFaq();
+});
+$('#filmBtn').addEventListener('click',()=>{
+  $('#filmView').classList.contains('on')?showDeck():showFilm();
+});
+$('#filmRestart').addEventListener('click',()=>{
+  const v=$('#filmVid'); v.currentTime=0; v.play().catch(()=>{}); toast('Film restarted');
 });
 $('#home').addEventListener('click',()=>{ go(1,0); showDeck(); });
 function stepBuild(d){
@@ -547,6 +603,8 @@ addEventListener('keydown',e=>{
   if(e.key==='/'&&!typing){ e.preventDefault(); $('#q').focus(); return; }
   if(e.key==='Escape'&&typing){ $('#q').value=''; $('#q').dispatchEvent(new Event('input')); $('#q').blur(); return; }
   if(typing) return;
+  if((e.key==='v'||e.key==='V')&&!e.metaKey&&!e.ctrlKey){ e.preventDefault(); $('#filmView').classList.contains('on')?showDeck():showFilm(); return; }
+  if(document.activeElement&&document.activeElement.id==='filmVid') return;
   if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){ e.preventDefault(); stepBuild(1); }
   else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); stepBuild(-1); }
   else if(e.key==='ArrowDown'){ e.preventDefault(); stepSlide(1); }
