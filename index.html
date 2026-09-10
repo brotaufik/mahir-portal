@@ -89,6 +89,9 @@ kbd{font:inherit;font-size:10.5px;color:var(--muted);border:1px solid var(--line
 .lnk .tx b{display:block;font-weight:600;color:inherit;font-size:13.5px;line-height:1.25}
 .lnk .tx small{display:block;color:#7C8AA8;font-size:11px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lnk .ext{flex:0 0 auto;color:#6E7C99}
+/* the keynotes entry is the one an audience is looking for, so its title
+   carries the deck's gold. Every other link title stays white. */
+.lnk.lnk-key .tx b{color:var(--gold)}
 
 /* act cluster */
 .act{border-bottom:1px solid rgba(255,255,255,.05)}
@@ -543,7 +546,7 @@ function buildLinks(){
     a.querySelector('b').textContent=l.t; a.querySelector('small').textContent=l.s;
     if(l.slide) a.addEventListener('click',()=>go(l.slide,l.build||0));
     if(l.view==='film') a.addEventListener('click',showFilm);
-    if(l.view==='kn') a.addEventListener('click',showKn);
+    if(l.view==='kn'){ a.classList.add('lnk-key'); a.addEventListener('click',showKn); }
     if(l.view==='film') a.addEventListener('click',showFilm);
     box.appendChild(a);
   });
