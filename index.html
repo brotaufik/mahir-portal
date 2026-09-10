@@ -129,6 +129,10 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
 .btn.pri:hover{background:#2A69EC}
 .btn.gold{background:rgba(242,178,51,.14);border-color:rgba(242,178,51,.35);color:var(--gold)}
 .btn.gold:hover{background:rgba(242,178,51,.24)}
+.btn.keycta{background:var(--gold);border-color:var(--gold);color:#1B1200;font-weight:700;letter-spacing:.02em}
+.btn.keycta:hover{background:#FFCB55;border-color:#FFCB55;color:#1B1200}
+.btn.keycta .lb{display:inline!important}
+.kn-foot .btn .lb{display:inline!important}
 .btn .lb{display:inline}
 .now{flex:1;min-width:0;padding:0 6px}
 .pips{display:flex;align-items:center;gap:5px;padding:0 3px;flex:0 0 auto}
@@ -273,7 +277,8 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
 
 .scrim{display:none}
 
-@media (max-width:1100px){ :root{--sidebar:300px} .btn .lb{display:none} .btn{padding:8px 10px} }
+@media (max-width:1100px){ :root{--sidebar:300px} .btn .lb{display:none} .btn{padding:8px 10px}
+  .btn.keycta{padding:8px 13px} }
 @media (max-width:860px){
   .app{grid-template-columns:1fr}
   .side{position:fixed;inset:0 auto 0 0;width:min(86vw,340px);transform:translateX(-102%);
@@ -284,6 +289,17 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
     transition:opacity .26s;z-index:25}
   .scrim.on{opacity:1;pointer-events:auto}
   .stagewrap{padding:8px}
+  /* On a phone the toolbar is the only thing an audience sees, so it carries the
+     keynotes button with its label. The deck title compresses to nothing useful
+     at this width and the deck advances by tapping the slide, so both give up
+     their space to make room. */
+  .bar{gap:7px;padding:10px 12px}
+  .now{display:none}
+  #prev,#next{display:none}
+  /* Home only resets the deck to slide 1 and Present opens it in a new tab.
+     Both are presenter conveniences, both are still in the sidebar, and both
+     were pushing the toolbar past the screen edge. They stand down here. */
+  #home,#openFull{display:none}
   .faq-in{grid-template-columns:1fr}
   .film{padding:18px}
   .kn-bar{padding:11px 15px;gap:9px}
@@ -340,6 +356,10 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
     <div class="bar">
       <button class="btn burger" id="burger" aria-label="Open navigation" aria-expanded="false">
         <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="btn keycta" id="knBtn" title="Presenter keynotes: all 40 slides">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="lb">KEYNOTES</span>
       </button>
       <button class="btn" id="home" title="Back to slide 1 (Home)">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -749,6 +769,9 @@ function showWall(){ filmPause(); $('#knView').classList.remove('on'); $('#filmV
 function showFilm(){ $('#knView').classList.remove('on'); $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); $('#filmView').classList.add('on'); }
 $('#faqBtn').addEventListener('click',()=>{
   $('#faqView').classList.contains('on')?showDeck():showFaq();
+});
+$('#knBtn').addEventListener('click',()=>{
+  $('#knView').classList.contains('on')?showDeck():showKn();
 });
 $('#filmBtn').addEventListener('click',()=>{
   $('#filmView').classList.contains('on')?showDeck():showFilm();
